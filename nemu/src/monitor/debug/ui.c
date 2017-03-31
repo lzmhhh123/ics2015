@@ -36,6 +36,18 @@ static int cmd_q(char *args) {
 	return -1;
 }
 
+static int cmd_s(char *args) {
+	cpu_exec(0);
+	return 0;
+}
+
+static int cmd_info(char *args) {
+	if(*args == 'r') {
+
+	}
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -48,7 +60,9 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 
 	/* TODO: Add more commands */
-
+	{ "s", "Step the execution of the program", cmd_s},
+	{ "info", "Display the values of registers by operation (r)", cmd_info},
+	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())"}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
