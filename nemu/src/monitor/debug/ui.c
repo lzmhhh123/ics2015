@@ -43,8 +43,16 @@ static int cmd_s(char *args) {
 
 static int cmd_info(char *args) {
 	if(*args == 'r') {
-
+		int i;
+		for(i = R_EAX; i <= R_EDI; ++i) {
+			printf("%s: 0x(%.08x)\n", regsl[i], cpu.gpr[i]._32);
+		}
+		printf("eip: 0x(%.08x)\n", cpu.eip);
 	}
+	return 0;
+}
+
+static int cmd_x(char *args) {
 	return 0;
 }
 
@@ -62,7 +70,7 @@ static struct {
 	/* TODO: Add more commands */
 	{ "s", "Step the execution of the program", cmd_s},
 	{ "info", "Display the values of registers by operation (r)", cmd_info},
-	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())"}
+	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
