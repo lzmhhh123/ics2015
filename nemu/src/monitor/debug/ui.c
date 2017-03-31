@@ -53,6 +53,13 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_x(char *args) {
+	int len, pos;
+	sscanf(args, "%d 0x%x", &len, &pos);
+	int i;
+	for(i = 0; i <= len; ++i) {	
+    printf("0x%02x ", *(unsigned char *)hwa_to_va(pos + i));
+	}
+	printf("\n");
 	return 0;
 }
 
