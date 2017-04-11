@@ -41,6 +41,14 @@ static int cmd_s(char *args) {
 	return 0;
 }
 
+static int cmd_p(char *args) {
+	bool issucceed = false;
+	expr(args, issucceed);
+	if(issucceed) {
+		printf("Your EXPR is successful.\n");
+	}
+}
+
 static int cmd_info(char *args) {
 	if(*args == 'r') {
 		int i;
@@ -56,7 +64,7 @@ static int cmd_x(char *args) {
 	int len, pos;
 	sscanf(args, "%d 0x%x", &len, &pos);
 	int i;
-	for(i = 0; i <= len; ++i) {	
+	for(i = 0; i <= len; ++i) {
     printf("0x%02x ", *(unsigned char *)hwa_to_va(pos + i));
 	}
 	printf("\n");
@@ -78,6 +86,7 @@ static struct {
 	{ "s", "Step the execution of the program", cmd_s},
 	{ "info", "Display the values of registers by operation (r)", cmd_info},
 	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x}
+	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
