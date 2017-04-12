@@ -138,10 +138,11 @@ static bool make_token(char *e) {
 
 bool check_parentheses(int p, int q) {
 	int a[40], i;
-	for(i = p; i < q; ++i) a[i] = 0;
+	for(i = p; i <= q; ++i) a[i] = 0;
 	for(i = p; i < q; ++i) {
 		a[i+1] = a[i];
-		if(tokens[i].type == '(') a[i+1] ++;
+		if(tokens[i].type == '(') a[i+1]++;
+		if(tokens[i].type == ')') a[i+1]--;
 		if(a[i+1] <= 0) return false;
 	}
 	return true;
