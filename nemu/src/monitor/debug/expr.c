@@ -205,6 +205,7 @@ int myeval(int p, int q, bool *success) {
 					if(tokens[i].type == ')') cnt--;
 					if(cnt == 0 && (tokens[i].type == '*' || tokens[i].type == '/')) {
 						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
+						printf("%d %d\n", val1, val2);
 						if(tokens[i].type == '*') return val1 * val2;
 						if(tokens[i].type == '/') return val1 / val2;
 					}
