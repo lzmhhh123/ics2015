@@ -226,9 +226,5 @@ uint32_t expr(char *e, bool *success) {
 	/* TODO: Insert codes to myevaluate the expression. */
 	*success = true;
 	int val = myeval(0, nr_token - 1, success);
-	if(!*success) {
-		panic("please implement me");
-		return 0;
-	}
 	return val;
 }
