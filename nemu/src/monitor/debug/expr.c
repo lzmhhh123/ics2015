@@ -138,6 +138,7 @@ static bool make_token(char *e) {
 
 bool check_parentheses(int p, int q) {
 	int a[40], i;
+	for(i = p; i < q; ++i) a[i] = 0;
 	for(i = p; i < q; ++i) {
 		a[i+1] = a[i];
 		if(tokens[i].type == '(') a[i+1] ++;
@@ -146,7 +147,7 @@ bool check_parentheses(int p, int q) {
 	return true;
 }
 
-int eval(int p, int q, bool *success) {
+int myeval(int p, int q, bool *success) {
 		int ret = 0;
     if(p > q) {
 				success = false;
@@ -173,7 +174,7 @@ int eval(int p, int q, bool *success) {
         /* The expression is surrounded by a matched pair of parentheses.
          * If that is the case, just throw away the parentheses.
          */
-        return eval(p + 1, q - 1, success);
+        return myeval(p + 1, q - 1, success);
     }
     else {
         /* We should do more things here. */
@@ -192,7 +193,7 @@ int eval(int p, int q, bool *success) {
 					if(tokens[i].type == '(') cnt++;
 					if(tokens[i].type == ')') cnt--;
 					if(cnt == 0 && (tokens[i].type == '-' || tokens[i].type == '+')) {
-						int val1 = eval(p, i - 1, success), val2 = eval(i + 1, q, success);
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
 						if(tokens[i].type == '-') return val1 - val2;
 						if(tokens[i].type == '+') return val1 + val2;
 					}
@@ -202,9 +203,10 @@ int eval(int p, int q, bool *success) {
 					if(tokens[i].type == '(') cnt++;
 					if(tokens[i].type == ')') cnt--;
 					if(cnt == 0 && (tokens[i].type == '*' || tokens[i].type == '/')) {
-						int val1 = eval(p, i - 1, success), val2 = eval(i + 1, q, success);
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
 						if(tokens[i].type == '*') return val1 * val2;
 						if(tokens[i].type == '/') return val1 / val2;
+					}
 				}
 
 				*success = false;
@@ -220,9 +222,9 @@ uint32_t expr(char *e, bool *success) {
 		return 0;
 	}
 
-	/* TODO: Insert codes to evaluate the expression. */
+	/* TODO: Insert codes to myevaluate the expression. */
 
-	uint32_t val = eval(0, nr_token - 1, success);
+	uint32_t val = myeval(0, nr_token - 1, success);
 	if(!*success) {
 		panic("please implement me");
 		return 0;

@@ -43,13 +43,14 @@ static int cmd_s(char *args) {
 
 static int cmd_p(char *args) {
 	bool issucceed = false;
-	int val = expr(args, issucceed);
+	int val = expr(args, &issucceed);
 	if(issucceed) {
 		printf("ans = %d\nYour EXPR is successful.\n", val);
 	}
 	else {
 		printf("Your EXPR is failed.\n");
 	}
+	return 0;
 }
 
 static int cmd_info(char *args) {
@@ -88,7 +89,7 @@ static struct {
 	/* TODO: Add more commands */
 	{ "s", "Step the execution of the program", cmd_s},
 	{ "info", "Display the values of registers by operation (r)", cmd_info},
-	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x}
+	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x},
 	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p}
 };
 
