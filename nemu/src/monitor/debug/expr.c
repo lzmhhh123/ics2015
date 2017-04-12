@@ -151,7 +151,7 @@ bool check_parentheses(int p, int q) {
 int myeval(int p, int q, bool *success) {
 		int ret = 0;
     if(p > q) {
-				success = false;
+				*success = false;
 				return 0;
         /* Bad expression */
     }
@@ -168,7 +168,7 @@ int myeval(int p, int q, bool *success) {
 					 }
 					 return ret;
 				 }
-				 success = false;
+				 *success = false;
 				 return 0;
     }
     else if(check_parentheses(p, q) == true) {
@@ -184,7 +184,7 @@ int myeval(int p, int q, bool *success) {
 				if(tokens[p].type == '-' || tokens[p].type == '+' || tokens[p].type == '*' || tokens[p].type == '/') flag = false;
 				if(tokens[q].type == '-' || tokens[q].type == '+' || tokens[q].type == '*' || tokens[q].type == '/') flag = false;
 				if(!flag) {
-					success = false;
+					*success = false;
 					printf("Your operation is illegal.\n");
 					return 0;
 				}
