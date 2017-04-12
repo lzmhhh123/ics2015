@@ -223,6 +223,7 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to myevaluate the expression. */
+	printf("%d \n", nr_token);
 
 	uint32_t val = myeval(0, nr_token - 1, success);
 	if(!*success) {
