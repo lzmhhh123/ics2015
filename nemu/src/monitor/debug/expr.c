@@ -162,7 +162,7 @@ int myeval(int p, int q, bool *success) {
          */
 				 if(tokens[p].type == NUM) {
 					 char *val = tokens[p].str;
-					 while(val) {
+					 while(*val) {
 						 ret = ret * 10 + *val - '0';
 						 val++;
 					 }
