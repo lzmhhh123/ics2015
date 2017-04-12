@@ -29,7 +29,7 @@ static struct rule {
 	{"\\)", ')'},					//right )
 	{"-", '-'},						//sub
 	{"\\*", '*'},					//mul
-	{"/", '/'}						//dev
+	{"/", '/'},						//dev
 	{"[0-9]+", NUM}       //number
 };
 
@@ -99,7 +99,7 @@ static bool make_token(char *e) {
 							return false;
 						}
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
-						tokens[substr_len] = '\0';
+						tokens[nr_token].str[substr_len] = '\0';
 						break;
 					case NOTYPE:
 						nr_token--;
@@ -123,8 +123,8 @@ static bool make_token(char *e) {
 	int cnt = 0;
 	bool flag = true;
 	for(int i = 0; i < nr_token; ++i) {
-		if(tokens[i] == '(') cnt++;
-		if(tokens[i] == ')') cnt--;
+		if(tokens[i].type == '(') cnt++;
+		if(tokens[i].type == ')') cnt--;
 		if(cnt < 0) flag = false;
 	}
 	if(cnt > 0) flag = false;
@@ -158,7 +158,7 @@ int eval(int p, int q, bool *success) {
          * For now this token should be a number.
          * Return the value of the number.
          */
-				 if(token[p].type == NUM) {
+				 if(tokens[p].type == NUM) {
 					 char *val = tokens[p].str;
 					 while(val) {
 						 ret = ret * 10 + *val - '0';
@@ -166,10 +166,8 @@ int eval(int p, int q, bool *success) {
 					 }
 					 return ret;
 				 }
-				 else {
-					 success = false;
-					 return 0;
-				 }
+				 success = false;
+				 return 0;
     }
     else if(check_parentheses(p, q) == true) {
         /* The expression is surrounded by a matched pair of parentheses.
@@ -208,7 +206,12 @@ int eval(int p, int q, bool *success) {
 						if(tokens[i].type == '*') return val1 * val2;
 						if(tokens[i].type == '/') return val1 / val2;
 				}
+
+				*success = false;
+				return 0;
     }
+
+		return 0;
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -219,7 +222,7 @@ uint32_t expr(char *e, bool *success) {
 
 	/* TODO: Insert codes to evaluate the expression. */
 
-	int val = eval(0, nr_token - 1, success);
+	uint32_t val = eval(0, nr_token - 1, success);
 	if(!*success) {
 		panic("please implement me");
 		return 0;
