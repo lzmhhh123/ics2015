@@ -43,9 +43,12 @@ static int cmd_s(char *args) {
 
 static int cmd_p(char *args) {
 	bool issucceed = false;
-	expr(args, issucceed);
+	int val = expr(args, issucceed);
 	if(issucceed) {
-		printf("Your EXPR is successful.\n");
+		printf("ans = %d\nYour EXPR is successful.\n", val);
+	}
+	else {
+		printf("Your EXPR is failed.\n");
 	}
 }
 
