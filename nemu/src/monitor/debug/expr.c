@@ -24,7 +24,12 @@ static struct rule {
 
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
-	{"==", EQ}						// equal
+	{"==", EQ},						// equal
+	{"\\(", '('},					//left (
+	{"\\)", ')'},					//right )
+	{"-", '-'},						//sub
+	{"\\*", '*'},					//mul
+	{"/", '/'}						//dev
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -60,7 +65,7 @@ static bool make_token(char *e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;
-	
+
 	nr_token = 0;
 
 	while(e[position] != '\0') {
@@ -74,11 +79,12 @@ static bool make_token(char *e) {
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
-				 * to record the token in the array ``tokens''. For certain 
+				 * to record the token in the array ``tokens''. For certain
 				 * types of tokens, some extra actions should be performed.
 				 */
 
 				switch(rules[i].token_type) {
+
 					default: panic("please implement me");
 				}
 
@@ -92,7 +98,28 @@ static bool make_token(char *e) {
 		}
 	}
 
-	return true; 
+	return true;
+}
+
+void eval(int p, int q) {
+    if(p > q) {
+        /* Bad expression */
+    }
+    else if(p == q) {
+        /* Single token.
+         * For now this token should be a number.
+         * Return the value of the number.
+         */
+    }
+    else if(check_parentheses(p, q) == true) {
+        /* The expression is surrounded by a matched pair of parentheses.
+         * If that is the case, just throw away the parentheses.
+         */
+        return eval(p + 1, q - 1);
+    }
+    else {
+        /* We should do more things here. */
+    }
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -105,4 +132,3 @@ uint32_t expr(char *e, bool *success) {
 	panic("please implement me");
 	return 0;
 }
-
