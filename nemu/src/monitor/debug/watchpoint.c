@@ -71,3 +71,17 @@ void free_wp(int num) {
 	printf("The NO.%d watchpoint isn't exist.\n", num);
 	return ;
 }
+
+void check_wp(int *nemu_state) {
+	WP *tmp = head;
+	for(; tmp != NULL; tmp = tmp -> next) {
+		bool success;
+		int val = expr(tmp -> expr_s, &success);
+		if(val != tmp -> last_val) {
+			printf("the watchpoint for EPXR %s's value is changed from %d to %d.\n", tmp -> expr_s, tmp -> last_val, val);
+			tmp -> last_val = val;
+			nemu_state = 0;
+		}
+	}
+	return ;
+}
