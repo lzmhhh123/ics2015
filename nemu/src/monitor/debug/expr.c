@@ -181,6 +181,38 @@ int myeval(int p, int q, bool *success) {
 					 }
 					 return ret;
 				 }
+				 else if(tokens[p].type == NUM16) {
+					 char *val = tokens[p].str;
+					 while(*val) {
+						 if(*val >= '0' && *val <= '9')
+						 	ret = ret * 16 + *val - '0';
+						 else if(*val >= 'a' && *val <= 'f')
+						 	ret = ret * 16 + *val - 'a' + 10;
+						 else ret = ret * 16 + *val - 'A' + 10;
+						 val++;
+					 }
+					 return ret;
+				 }
+				 else if(tokens[p].type == REG) {
+					 char *reg = tokens[p].str + 1;
+					 int i = 0;
+					 if(strcmp(reg, "eip") == 0) {
+						 return cpu.eip;
+					 }
+					 for(i = 0; i < 8; ++i)
+          	if(strcmp(regsl[i], reg) == 0)
+        			return reg_l(i);
+           for(i = 0; i < 8; ++i)
+        		if(strcmp(regsw[i], reg) == 0)
+            	return reg_w(i);
+           for(i = 0; i < 8; ++i)
+            if(strcmp(regsb[i], reg) == 0)
+            	return reg_b(i);
+           printf("didn't find register : %s\n", tokens[p].str);
+           *success = false;
+					 return 0;
+				 }
+
 				 *success = false;
 				 return 0;
     }
