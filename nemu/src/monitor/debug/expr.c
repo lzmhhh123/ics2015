@@ -34,7 +34,7 @@ static struct rule {
 	{"&&", AND},
 	{"\\|\\|", OR},
 	{"\\!", '!'},
-	{"0x[0-9a-fA-F]+", NUM16},
+	{"0[xX][0-9a-fA-F]+", NUM16},
 	{"[0-9]+", NUM},       //number
 	{"\\$[a-zA-Z]+", REG}
 };
@@ -182,7 +182,7 @@ int myeval(int p, int q, bool *success) {
 					 return ret;
 				 }
 				 else if(tokens[p].type == NUM16) {
-					 char *val = tokens[p].str;
+					 char *val = tokens[p].str + 2;
 					 while(*val) {
 						 if(*val >= '0' && *val <= '9')
 						 	ret = ret * 16 + *val - '0';
