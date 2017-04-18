@@ -34,8 +34,8 @@ static struct rule {
 	{"&&", AND},
 	{"\\|\\|", OR},
 	{"\\!", '!'},
-	{"[0-9]+", NUM},       //number
 	{"0[xX][0-9a-fA-F]+", NUM16},
+	{"[0-9]+", NUM},       //number
 	{"\\$[a-zA-Z]+", REG}
 };
 
