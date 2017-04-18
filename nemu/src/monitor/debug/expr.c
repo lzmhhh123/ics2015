@@ -34,9 +34,9 @@ static struct rule {
 	{"&&", AND},
 	{"\\|\\|", OR},
 	{"!", '!'},
-	{"[0-9]+", NUM},       //number
-	{"0x[0-9a-fA-F]+", NUM16},
-	{"$[a-zA-Z]+", REG}
+	{"\\b[0-9]+\\b", NUM},       //number
+	{"\\b0x[0-9a-fA-F]+\\b", NUM16},
+	{"\\b$[a-zA-Z]+\\b", REG}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
