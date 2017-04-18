@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUM
+	NOTYPE = 256, EQ, NUM, NUM16, REG, NEQ, AND, OR, DEREF
 
 	/* TODO: Add more token types */
 
@@ -30,7 +30,14 @@ static struct rule {
 	{"-", '-'},						//sub
 	{"\\*", '*'},					//mul
 	{"/", '/'},						//dev
-	{"[0-9]+", NUM}       //number
+	{"!=", NEQ},
+	{"&&", AND},
+	{"\\|\\|", OR},
+	{"!", '!'},
+	{"[0-9]+", NUM},       //number
+	{"0x[0-9a-fA-F]+", NUM16},
+	{"$[a-zA-Z]+", REG},
+	{"*", DEREF}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -92,8 +99,15 @@ static bool make_token(char *e) {
 					case '*':
 					case '/':
 					case '(':
+					case '!':
+					case OR:
+					case AND:
+					case NEQ:
+					case EQ:
 					case ')': break;
 					case NUM:
+					case REG:
+					case NUM16:
 						if(substr_len > 31) {
 							printf("The input number is too long.");
 							return false;
@@ -193,6 +207,37 @@ int myeval(int p, int q, bool *success) {
 				for(i = p; i <= q; ++i) {
 					if(tokens[i].type == '(') cnt++;
 					if(tokens[i].type == ')') cnt--;
+					if(cnt == 0 && (tokens[i].type == EQ || tokens[i].type == NEQ)) {
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
+						if(tokens[i].type == EQ) return val1 == val2;
+						if(tokens[i].type == NEQ) return val1 != val2;
+					}
+				}
+
+				cnt = 0;
+				for(i = p; i <= q; ++i) {
+					if(tokens[i].type == '(') cnt++;
+					if(tokens[i].type == ')') cnt--;
+					if(cnt == 0 && tokens[i].type == OR) {
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
+						return val1 || val2;
+					}
+				}
+
+				cnt = 0;
+				for(i = p; i <= q; ++i) {
+					if(tokens[i].type == '(') cnt++;
+					if(tokens[i].type == ')') cnt--;
+					if(cnt == 0 && tokens[i].type == AND) {
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
+						return val1 && val2;
+					}
+				}
+
+				cnt = 0;
+				for(i = p; i <= q; ++i) {
+					if(tokens[i].type == '(') cnt++;
+					if(tokens[i].type == ')') cnt--;
 					if(cnt == 0 && (tokens[i].type == '-' || tokens[i].type == '+')) {
 						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
 						if(tokens[i].type == '-') return val1 - val2;
@@ -200,16 +245,38 @@ int myeval(int p, int q, bool *success) {
 					}
 				}
 
+				cnt = 0;
 				for(i = p; i <= q; ++i) {
 					if(tokens[i].type == '(') cnt++;
 					if(tokens[i].type == ')') cnt--;
-					if(cnt == 0 && (tokens[i].type == '*' || tokens[i].type == '/')) {
+					if(cnt == 0 && (tokens[i].type == '-' || tokens[i].type == '+')) {
+						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
+						if(tokens[i].type == '-') return val1 - val2;
+						if(tokens[i].type == '+') return val1 + val2;
+					}
+				}
+
+				cnt = 0;
+				for(i = p; i <= q; ++i) {
+					if(tokens[i].type == '(') cnt++;
+					if(tokens[i].type == ')') cnt--;
+					if(cnt == 0 && ((tokens[i].type == '*' && i != p && (tokens[i-1].type == NUM || tokens[i-1].type == NUM16 || tokens[i-1].type == REG || tokens[i-1].type == ')')) || tokens[i].type == '/')) {
 						int val1 = myeval(p, i - 1, success), val2 = myeval(i + 1, q, success);
 						if(tokens[i].type == '*') return val1 * val2;
 						if(tokens[i].type == '/') return val1 / val2;
 					}
 				}
 
+				if(tokens[p].type == '*') {
+					int pos = myeval(p + 1, q, success);
+					int i = 0;
+					int ret = 0;
+					for(; i < 4; ++i) {
+						ret = ret * 256 + *(unsigned char *)hwa_to_va(pos + i);
+					}
+					return ret;
+				}
+				if(tokens[p].type == '!') return !myeval(p + 1, q, success);
 				*success = false;
 				return 0;
     }

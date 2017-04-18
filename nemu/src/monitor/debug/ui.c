@@ -61,6 +61,9 @@ static int cmd_info(char *args) {
 		}
 		printf("eip: 0x%.08x\n", cpu.eip);
 	}
+	//else if(*arg == 'w') {
+	//	print_w();
+//	}
 	return 0;
 }
 
@@ -88,9 +91,12 @@ static struct {
 
 	/* TODO: Add more commands */
 	{ "s", "Step the execution of the program", cmd_s},
-	{ "info", "Display the values of registers by operation (r)", cmd_info},
+	{ "info", "Display the values of registers by operation (r)\nDisplay the monitor message by operation (w)", cmd_info},
 	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x},
 	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p}
+	//{ "w", "w POSITON: Add a watchpoint at POSITON", cmd_w},
+//	{ "d", "d NO: Delete the number NO watchpoint", cmd_d}
+
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
