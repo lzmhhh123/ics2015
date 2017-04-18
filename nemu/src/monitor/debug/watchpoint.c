@@ -52,6 +52,13 @@ void free_wp(int num) {
 		printf("The NO.%d watchpoint isn't exist.\n", num);
 		return ;
 	}
+	if(head -> NO == num) {
+		WP *tmp = head;
+		head = head -> next;
+		tmp -> next = free_;
+		free_ = tmp;
+		return ;
+	}
 	WP *tmp = head -> next, *last = head;
 	for(; tmp != NULL; tmp = tmp -> next, last = last -> next) {
 		if(tmp -> NO == num) {
