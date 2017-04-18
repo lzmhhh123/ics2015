@@ -53,6 +53,31 @@ static int cmd_p(char *args) {
 	return 0;
 }
 
+static int cmd_w(char *args) {
+	bool success = false;
+	expr(args, &success);
+	if(success == false) {
+		printf("Your EXPR is illegal.\n");
+		return 0;
+	}
+	new_wp(args);
+	return 0;
+}
+
+static int cmd_d(char *args) {
+	if(args == NULL) {
+		printf("Please input a num.\n");
+		return 0;
+	}
+	int num;
+	if(sscanf(args, "%d", &num) == 0) {
+		printf("Input not a number.\n");
+		return 0;
+	}
+	free_wp(num);
+	return 0;
+}
+
 static int cmd_info(char *args) {
 	if(*args == 'r') {
 		int i;
@@ -61,9 +86,9 @@ static int cmd_info(char *args) {
 		}
 		printf("eip: 0x%.08x\n", cpu.eip);
 	}
-	//else if(*arg == 'w') {
-	//	print_w();
-//	}
+	else if(*args == 'w') {
+		print_wp();
+	}
 	return 0;
 }
 
@@ -93,9 +118,9 @@ static struct {
 	{ "s", "Step the execution of the program", cmd_s},
 	{ "info", "Display the values of registers by operation (r)\nDisplay the monitor message by operation (w)", cmd_info},
 	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x},
-	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p}
-	//{ "w", "w POSITON: Add a watchpoint at POSITON", cmd_w},
-//	{ "d", "d NO: Delete the number NO watchpoint", cmd_d}
+	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p},
+	{ "w", "w EXPR: Add a watchpoint for EXPR", cmd_w},
+	{ "d", "d NO: Delete the number NO watchpoint", cmd_d}
 
 };
 
