@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUM, NUM16, REG, NEQ, AND, OR, DEREF
+	NOTYPE = 256, EQ, NUM, NUM16, REG, NEQ, AND, OR
 
 	/* TODO: Add more token types */
 
@@ -36,8 +36,7 @@ static struct rule {
 	{"!", '!'},
 	{"[0-9]+", NUM},       //number
 	{"0x[0-9a-fA-F]+", NUM16},
-	{"$[a-zA-Z]+", REG},
-	{"*", DEREF}
+	{"$[a-zA-Z]+", REG}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -277,6 +276,7 @@ int myeval(int p, int q, bool *success) {
 					return ret;
 				}
 				if(tokens[p].type == '!') return !myeval(p + 1, q, success);
+
 				*success = false;
 				return 0;
     }
