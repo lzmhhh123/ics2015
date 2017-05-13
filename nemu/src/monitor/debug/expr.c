@@ -199,6 +199,27 @@ int myeval(int p, int q, bool *success) {
 					 if(strcmp(reg, "eip") == 0) {
 						 return cpu.eip;
 					 }
+					 if(strcmp(reg, "cf") == 0) {
+						 return cpu.CF;
+					 }
+					 if(strcmp(reg, "pf") == 0) {
+						 return cpu.PF;
+					 }
+					 if(strcmp(reg, "zf") == 0) {
+						 return cpu.ZF;
+					 }
+					 if(strcmp(reg, "sf") == 0) {
+						 return cpu.SF;
+					 }
+					 if(strcmp(reg, "if") == 0) {
+						 return cpu.IF;
+					 }
+					 if(strcmp(reg, "df") == 0) {
+						 return cpu.DF;
+					 }
+					 if(strcmp(reg, "of") == 0) {
+						 return cpu.OF;
+					 }
 					 for(i = 0; i < 8; ++i)
           	if(strcmp(regsl[i], reg) == 0)
         			return reg_l(i);

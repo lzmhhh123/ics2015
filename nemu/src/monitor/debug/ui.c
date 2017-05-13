@@ -85,6 +85,14 @@ static int cmd_info(char *args) {
 			printf("%s: 0x%.08x\n", regsl[i], cpu.gpr[i]._32);
 		}
 		printf("eip: 0x%.08x\n", cpu.eip);
+		printf("eflags: 0x%.08x\n", cpu.eflags);
+		printf("CF: 0x%.08x\n",cpu.CF);
+    printf("PF: 0x%.08x\n",cpu.PF);
+		printf("ZF: 0x%.08x\n",cpu.ZF);
+		printf("SF: 0x%.08x\n",cpu.SF);
+		printf("IF: 0x%.08x\n",cpu.IF);
+		printf("DF: 0x%.08x\n",cpu.DF);
+		printf("OF: 0x%.08x\n",cpu.OF);
 	}
 	else if(*args == 'w') {
 		print_wp();
