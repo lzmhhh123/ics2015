@@ -3,17 +3,17 @@
 #define instr call
 
 static void do_execute() {
-  uint32_t shift = (-1) << ((DATA_TYPE << 3) & 1);
+  uint32_t shift = (-1) << (DATA_BYTE * 8 - 1);
   shift <<= 1;
   shift = ~shift;
   cpu.eip &= shift;
   cpu.esp -= 4;
-  swaddr_write(cpu.esp, 4, cpu.eip + (DATA_TYPE << 3));
+  swaddr_write(cpu.esp, 4, cpu.eip + DATA_BYTE * 8);
   if(op_src->type == OP_TYPE_IMM)
 		cpu.eip += op_src->val;
 	else
 		cpu.eip = op_src->val & shift;
-	print_asm_template1();
+	print_asm("call $0x%x", cpu.eip);
 }
 
 make_instr_helper(i)
