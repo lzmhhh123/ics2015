@@ -37,5 +37,5 @@
   cpu.PF = 1; \
   int i; \
   for(i = 0; i < 8; ++i) cpu.PF ^= (result & 0xff) >> i; \
-  cpu.ZF = !res; \
+  cpu.ZF = !result; \
   cpu.SF = !MSB(result);

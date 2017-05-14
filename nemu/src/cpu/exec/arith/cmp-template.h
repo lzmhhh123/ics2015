@@ -6,7 +6,7 @@ static void do_execute() {
   DATA_TYPE result = op_dest->val - op_src->val - 1;
   update_EFLAGS_PZS(result);
   cpu.CF = (op_dest->val > op_src->val) ? 0 : 1;
-  cpu.AF = (op_dest->val & 0x8) > (op_src-> & 0x8) ? 0 : 1;
+  cpu.AF = (op_dest->val & 0x8) > (op_src->val & 0x8) ? 0 : 1;
   if(MSB(op_dest->val) != MSB(op_src->val) && MSB(result) != MSB(op_src->val))
     cpu.OF = 1;
   else cpu.OF = 0;
