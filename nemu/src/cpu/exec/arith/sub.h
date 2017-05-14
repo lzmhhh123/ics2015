@@ -1,5 +1,5 @@
-#ifndef __SUB_H___
-#define __SUB_H
+#ifndef __SUB_H__
+#define __SUB_H__
 
 make_helper(sub_i2a_b);
 make_helper(sub_i2rm_b);
