@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUM, NUM16, REG, NEQ, AND, OR
+	NOTYPE = 256, EQ, NUM, NUM16, REG, NEQ, AND, OR, VAR
 
 	/* TODO: Add more token types */
 
@@ -36,7 +36,8 @@ static struct rule {
 	{"\\!", '!'},
 	{"0[xX][0-9a-fA-F]+", NUM16},
 	{"[0-9]+", NUM},       //number
-	{"\\$[a-zA-Z]+", REG}
+	{"\\$[a-zA-Z]+", REG},
+	{"[a-zA-Z_]+[a-zA-Z0-9_]*", VAR}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -105,6 +106,7 @@ static bool make_token(char *e) {
 					case EQ:
 					case ')': break;
 					case NUM:
+					case VAR:
 					case REG:
 					case NUM16:
 						if(substr_len > 31) {
@@ -192,6 +194,15 @@ int myeval(int p, int q, bool *success) {
 						 val++;
 					 }
 					 return ret;
+				 }
+				 else if(tokens[p].type == VAR) {
+					 ret = get_var(tokens[p].str);
+					 if(ret == -1) {
+						 *success = false;
+						 printf("Can't find variable: %s\n", tokens[p].str);
+						 return 0;
+					 }
+					 else return ret;
 				 }
 				 else if(tokens[p].type == REG) {
 					 char *reg = tokens[p].str + 1;
