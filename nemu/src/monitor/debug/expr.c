@@ -69,6 +69,8 @@ typedef struct token {
 Token tokens[32];
 int nr_token;
 
+int get_var(char*);
+
 static bool make_token(char *e) {
 	int position = 0;
 	int i;

@@ -11,7 +11,7 @@ static int nr_symtab_entry;
 int get_var(char *str) {
 	int i = 0;
 	for(; i < nr_symtab_entry; ++i) {
-		if(strcmp(str, strtab[i].st_name) == 0) {
+		if(strcmp(str, strtab + symtab[i].st_name) == 0) {
 			return symtab[i].st_value;
 		}
 	}
