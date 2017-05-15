@@ -29,7 +29,7 @@ make_instr_helper(i)
 #define instr jbe
 
 static void do_execute() {
-  if(CF == 1 || ZF == 1) {
+  if(cpu.CF == 1 || cpu.ZF == 1) {
     int32_t val = op_src->val;
     val = val << (32 - DATA_BYTE * 8);
     val = val >> (32 - DATA_BYTE * 8);
