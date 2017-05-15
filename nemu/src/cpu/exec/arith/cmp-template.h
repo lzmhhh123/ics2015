@@ -7,8 +7,7 @@ static void do_execute() {
     update_EFLAGS_PZS(result);
     cpu.CF = (((long long)op_dest->val - (long long)op_src->val) >> (8 * DATA_BYTE)) & 1;
     cpu.AF = (op_dest->val & 0x8) > (op_src->val & 0x8) ? 0 : 1;
-    if(MSB(op_dest->val) != MSB(op_src->val) && MSB(result) != MSB(op_dest->val))
-        cpu.OF = 1;
+    if(MSB(op_dest->val) != MSB(op_src->val) && MSB(result) != MSB(op_dest->val)) cpu.OF = 1;
     else cpu.OF = 0;
 	print_asm_template2();
 }
