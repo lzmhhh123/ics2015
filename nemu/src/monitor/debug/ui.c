@@ -78,6 +78,30 @@ static int cmd_d(char *args) {
 	return 0;
 }
 
+bool get_fun(uint32_t, char*);
+static int cmd_bt(char *args) {
+	if(args != NULL)
+		printf("(there is no need to input any arguments)\n");
+	uint32_t tmp = cpu.ebp;
+	uint32_t addr = cpu.eip;
+	char name[32];
+	int i = 0, j;
+	while(get_fun(addr, name)) {
+		name[31] = '\0';
+		printf("#%02d  %08x in %s(", i++, addr, name);
+		for(j = 2; j < 6; ++j){
+			if(tmp + j * 4 > 0 && tmp + j * 4 < 0x8000000)
+				printf("%d, ", swaddr_read(tmp + j * 4, 4));
+		}
+		if(tmp + j * 4 > 0 && tmp + j * 4 < 0x8000000)
+			printf("%d", swaddr_read(tmp + j * 4, 4));
+		printf(")\n");
+		addr = swaddr_read(tmp + 4, 4);
+		tmp = swaddr_read(tmp, 4);
+	}
+	return 0;
+}
+
 static int cmd_info(char *args) {
 	if(*args == 'r') {
 		int i;
@@ -128,7 +152,8 @@ static struct {
 	{ "x", "Display the values of memory by operation: (lenth) (start position use 0x())", cmd_x},
 	{ "p", "p EXPR: Calculate the EXPR print the result", cmd_p},
 	{ "w", "w EXPR: Add a watchpoint for EXPR", cmd_w},
-	{ "d", "d NO: Delete the number NO watchpoint", cmd_d}
+	{ "d", "d NO: Delete the number NO watchpoint", cmd_d},
+	{ "bt", "bt: Print backtrace of all stack frames", cmd_bt}
 
 };
 
