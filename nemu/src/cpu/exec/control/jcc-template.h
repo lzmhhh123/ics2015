@@ -24,7 +24,23 @@ static void do_execute() {
 }
 
 make_instr_helper(i)
-
 #undef instr
+
+#define instr jbe
+
+static void do_execute() {
+  if(CF == 1 || ZF == 1) {
+    int32_t val = op_src->val;
+    val = val << (32 - DATA_BYTE * 8);
+    val = val >> (32 - DATA_BYTE * 8);
+    cpu.eip += op_src->val;
+    if(DATA_BYTE == 2) cpu.eip &= 0xffff;
+  }
+  print_asm("jbe $0x%x", cpu.eip + CODE_LEN);
+}
+
+make_instr_helper(i)
+#undef instr
+
 #undef CODE_LEN
 #include "cpu/exec/template-end.h"
