@@ -17,6 +17,7 @@
 #include "arith/cmp.h"
 #include "arith/sub.h"
 #include "arith/add.h"
+#include "arith/adc.h"
 
 #include "control/call.h"
 #include "control/jcc.h"
