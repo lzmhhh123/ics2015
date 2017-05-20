@@ -10,17 +10,19 @@
 #define CODE_LEN 8
 #endif
 
+#define get_new_eip()\
+	int32_t val = op_src->val;\
+	val = val << (32 - DATA_BYTE * 8);\
+	val = val >> (32 - DATA_BYTE * 8);\
+	uint32_t new_eip = cpu.eip + val ;\
+	if(DATA_BYTE == 2) new_eip &= 0xffff;\
+	print_asm(str(instr) " $0x%x", new_eip + CODE_LEN);
+
 #define instr je
 
 static void do_execute() {
-  if(cpu.ZF == 1) {
-    int32_t val = op_src->val;
-    val = val << (32 - DATA_BYTE * 8);
-    val = val >> (32 - DATA_BYTE * 8);
-    cpu.eip += op_src->val;
-    if(DATA_BYTE == 2) cpu.eip &= 0xffff;
-  }
-  print_asm("je $0x%x", cpu.eip + CODE_LEN);
+  get_new_eip();
+  if(cpu.ZF == 1) cpu.eip = new_eip;
 }
 
 make_instr_helper(i)
@@ -29,14 +31,8 @@ make_instr_helper(i)
 #define instr jbe
 
 static void do_execute() {
-  if(cpu.CF == 1 || cpu.ZF == 1) {
-    int32_t val = op_src->val;
-    val = val << (32 - DATA_BYTE * 8);
-    val = val >> (32 - DATA_BYTE * 8);
-    cpu.eip += op_src->val;
-    if(DATA_BYTE == 2) cpu.eip &= 0xffff;
-  }
-  print_asm("jbe $0x%x", cpu.eip + CODE_LEN);
+  get_new_eip();
+  if(cpu.ZF == 1 || cpu.CF == 1) cpu.eip = new_eip;
 }
 
 make_instr_helper(i)

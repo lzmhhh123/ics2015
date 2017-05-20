@@ -89,7 +89,7 @@ static int cmd_bt(char *args) {
 	while(get_fun(addr, name)) {
 		name[31] = '\0';
 		printf("#%02d  %08x in %s(", i++, addr, name);
-		for(j = 2; j < 6; ++j){
+		for(j = 2; j < 6; ++j) {
 			if(tmp + j * 4 > 0 && tmp + j * 4 < 0x8000000)
 				printf("%d, ", swaddr_read(tmp + j * 4, 4));
 		}
