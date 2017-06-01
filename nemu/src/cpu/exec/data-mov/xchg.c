@@ -12,8 +12,5 @@
 #include "xchg-template.h"
 #undef DATA_BYTE
 
-
-/* for instruction encoding overloading */
-
 make_helper_v(xchg_a2r)
 make_helper_v(xchg_r2rm)

@@ -9,9 +9,8 @@ static void do_execute () {
 	/* DONE: Update EFLAGS. */
 	//panic("please implement me");
 	update_EFLAGS_PZS(result);
-	//OF: overflow flag, 只有最大正数+1会溢出
-	if( result == ~(-1ll << (8 * DATA_BYTE))  ) 
-		cpu.OF = 1; 
+	if( result == ~(-1ll << (8 * DATA_BYTE))  )
+		cpu.OF = 1;
 	else cpu.OF = 0;
 
 	print_asm_template1();

@@ -18,7 +18,7 @@
 	if(DATA_BYTE == 2) new_eip &= 0xffff;\
 	print_asm(str(instr) " $0x%x", new_eip + CODE_LEN);
 
-/*---------------------------------------------*/
+
 #define instr jo
 
 static void do_execute() {
@@ -29,7 +29,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jno
 
 static void do_execute() {
@@ -40,7 +40,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jb
 
 static void do_execute() {
@@ -51,7 +51,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jae
 
 static void do_execute() {
@@ -62,7 +62,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr je
 
 static void do_execute() {
@@ -73,7 +73,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jne
 
 static void do_execute() {
@@ -84,7 +84,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jbe
 
 static void do_execute() {
@@ -95,7 +95,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr ja
 
 static void do_execute() {
@@ -106,7 +106,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr js
 
 static void do_execute() {
@@ -117,7 +117,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jns
 
 static void do_execute() {
@@ -128,7 +128,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jp
 
 static void do_execute() {
@@ -139,7 +139,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jnp
 
 static void do_execute() {
@@ -150,7 +150,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jl
 
 static void do_execute() {
@@ -161,7 +161,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jge
 
 static void do_execute() {
@@ -172,7 +172,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jle
 
 static void do_execute() {
@@ -183,7 +183,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jg
 
 static void do_execute() {
@@ -194,7 +194,7 @@ static void do_execute() {
 make_instr_helper(i)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr jcxz
 
 static void do_execute() {
@@ -204,7 +204,7 @@ static void do_execute() {
 
 make_instr_helper(i)
 #undef instr
-/*---------------------------------------------*/
+
 
 #undef CODE_LEN
 #include "cpu/exec/template-end.h"

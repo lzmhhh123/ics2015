@@ -1,6 +1,6 @@
 #include "cpu/exec/template-start.h"
 
-/*---------------------------------------------*/
+
 #define instr seto
 
 static void do_execute() {
@@ -12,7 +12,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setno
 
 static void do_execute() {
@@ -24,7 +24,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setb
 
 static void do_execute() {
@@ -36,7 +36,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setae
 
 static void do_execute() {
@@ -48,7 +48,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr sete
 
 static void do_execute() {
@@ -60,7 +60,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setne
 
 static void do_execute() {
@@ -72,7 +72,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setbe
 
 static void do_execute() {
@@ -84,7 +84,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr seta
 
 static void do_execute() {
@@ -96,7 +96,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr sets
 
 static void do_execute() {
@@ -108,7 +108,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setns
 
 static void do_execute() {
@@ -120,7 +120,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setp
 
 static void do_execute() {
@@ -132,7 +132,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setnp
 
 static void do_execute() {
@@ -144,7 +144,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setl
 
 static void do_execute() {
@@ -156,7 +156,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setge
 
 static void do_execute() {
@@ -168,7 +168,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setle
 
 static void do_execute() {
@@ -180,7 +180,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setg
 
 static void do_execute() {
@@ -192,7 +192,7 @@ static void do_execute() {
 make_instr_helper(rm)
 
 #undef instr
-/*---------------------------------------------*/
+
 #define instr setcxz
 
 static void do_execute() {
@@ -203,6 +203,6 @@ static void do_execute() {
 
 make_instr_helper(rm)
 #undef instr
-/*---------------------------------------------*/
+
 
 #include "cpu/exec/template-end.h"

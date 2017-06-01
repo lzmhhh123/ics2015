@@ -12,8 +12,6 @@
 #include "jcc-template.h"
 #undef DATA_BYTE
 
-/* for instruction encoding overloading */
-
 make_helper_v(jo_i)
 make_helper_v(je_i)
 make_helper_v(js_i)
@@ -30,5 +28,3 @@ make_helper_v(jae_i)
 make_helper_v(ja_i)
 make_helper_v(jnp_i)
 make_helper_v(jg_i)
-
-
