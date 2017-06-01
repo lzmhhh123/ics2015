@@ -8,7 +8,7 @@ extern char *exec_file;
 
 void load_elf_tables(int, char *[]);
 void init_regex();
-void init_wp_list();
+void init_wp_pool();
 void init_ddr3();
 
 FILE *log_fp = NULL;
@@ -35,8 +35,8 @@ void init_monitor(int argc, char *argv[]) {
 	/* Compile the regular expressions. */
 	init_regex();
 
-	/* Initialize the watchpoint link list. */
-	init_wp_list();
+	/* Initialize the watchpoint pool. */
+	init_wp_pool();
 
 	/* Display welcome message. */
 	welcome();
@@ -90,6 +90,5 @@ void restart() {
 	/* Initialize DRAM. */
 	init_ddr3();
 
-    /* Initialize EFLAGS */
-    cpu.eflags = 0x00000002;
+	cpu.eflags = 0x2;
 }
