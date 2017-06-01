@@ -7,3 +7,5 @@
 #define DATA_BYTE 2
 #include "movsx-template.h"
 #undef DATA_BYTE
+
+/* for instruction encoding overloading */

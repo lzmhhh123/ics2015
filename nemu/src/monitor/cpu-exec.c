@@ -1,6 +1,5 @@
 #include "monitor/monitor.h"
 #include "cpu/helper.h"
-#include "monitor/watchpoint.h"
 #include <setjmp.h>
 
 /* The assembly code of instructions executed is only output to the screen
@@ -8,7 +7,7 @@
  * This is useful when you use the ``si'' command.
  * You can modify this value as you want.
  */
-#define MAX_INSTR_TO_PRINT 10
+#define MAX_INSTR_TO_PRINT 20
 
 int nemu_state = STOP;
 
@@ -36,6 +35,7 @@ void do_int3() {
 }
 
 /* Simulate how the CPU works. */
+extern void check_wp(int *nemu_state);
 void cpu_exec(volatile uint32_t n) {
 	if(nemu_state == END) {
 		printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
@@ -73,16 +73,10 @@ void cpu_exec(volatile uint32_t n) {
 		}
 #endif
 
-		/* TODO: check watchpoints here. */
+		/* DONE: check watchpoints here. */
+        check_wp(&nemu_state);
 
-		check_wp(&nemu_state);
 		if(nemu_state != RUNNING) { return; }
-
-#ifdef HAS_DEVICE
-		extern void device_update();
-		device_update();
-#endif
-
 	}
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }

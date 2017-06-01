@@ -6,7 +6,8 @@ static void do_execute () {
 	DATA_TYPE result = op_dest->val ^ op_src->val;
 	OPERAND_W(op_dest, result);
 
-	/* TODO: Update EFLAGS. */
+	/* DONE: Update EFLAGS. */
+	//panic("please implement me");
 	update_EFLAGS_PZS(result);
 	cpu.OF = cpu.CF = 0;
 

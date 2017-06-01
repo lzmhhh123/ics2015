@@ -3,10 +3,11 @@
 #define instr test
 
 static void do_execute() {
-  cpu.CF = cpu.OF = 0;
-  DATA_TYPE result = op_src->val & op_dest->val;
-  update_EFLAGS_PZS(result);
-  print_asm_template2();
+	cpu.OF = 0;
+	cpu.CF = 0;
+	DATA_TYPE result = op_src->val & op_dest->val;
+	update_EFLAGS_PZS(result);
+	print_asm_template2();
 }
 
 make_instr_helper(i2a)
