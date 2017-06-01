@@ -44,10 +44,12 @@ uint32_t loader() {
 		//if(elf->e_phnum == 3) {HIT_BAD_TRAP;}
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
+
 			/* DONE: read the content of the segment from the ELF file to the memory region [VirtAddr, VirtAddr + FileSiz) */
-			ramdisk_read((uint8_t *)ph->p_vaddr, ph->p_offset, ph->p_filesz);
-			/* zero the memory region [VirtAddr + FileSiz, VirtAddr + MemSiz)	 */
-			memset((uint8_t *)ph->p_vaddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
+			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz);
+
+			/* DONE: zero the memory region [VirtAddr + FileSiz, VirtAddr + MemSiz)	 */
+			memset((void *)(ph->p_vaddr+ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
 
 #ifdef IA32_PAGE
